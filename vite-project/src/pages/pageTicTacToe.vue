@@ -1,5 +1,6 @@
 <script>
-import * as myModule from '../dinoGame.js';
+import * as myModule from '../TicTacToe.js';
+import '../styleTicTacToe.css';
 import { watch } from 'vue';
 
 export default {
@@ -28,11 +29,11 @@ export default {
             this.isPaused = myModule.isPaused;
             this.isAlive = myModule.isAlive
         },
-        pollData () {
+        pollData() {
 
             this.isPaused = myModule.isPaused;
             this.isAlive = myModule.isAlive;
-	    }
+        }
     },
     mounted() {
         myModule.init();
@@ -50,14 +51,42 @@ export default {
 
 <template>
     <div class="content">
-        <span class="nameGame">DINO</span>
+        <span class="nameGame">TIC-TAC-TOE</span>
         <div class="containerForGame">
 
-            <canvas id="infoCanvas" width="600" height="30"></canvas>
-            <canvas id="gamePlayCanvas" width="600" height="200"></canvas>
-            <canvas id="gameOverCanvas" width="600" height="120"></canvas>
-            <div class="centerContainer">
-                <button id="restartButton"><img src="../image/DinoAssets/restart.png" alt="Перезагрузка"></button>
+            <div class="main">
+                <div class="containerScore">
+                    <div class="score">СЧЕТ ИГРЫ</div>
+                    <div class="styleContainerScore">
+                        <div>игрок</div>
+                        <div class="infoBlock"></div>
+                        <div>бот</div>
+                    </div>
+                </div>
+                <div class="contentGame">
+                    <div class="wrap">
+                        <div>
+                            <div class="cell" data-num="0"></div>
+                            <div class="cell" data-num="1"></div>
+                            <div class="cell" data-num="2"></div>
+                        </div>
+                        <div>
+                            <div class="cell" data-num="3"></div>
+                            <div class="cell" data-num="4"></div>
+                            <div class="cell" data-num="5"></div>
+                        </div>
+                        <div>
+                            <div class="cell" data-num="6"></div>
+                            <div class="cell" data-num="7"></div>
+                            <div class="cell" data-num="8"></div>
+                        </div>
+                    </div>
+                </div>
+                <button 
+                    @click="restartGame()" 
+                    class="buttonAgainInGame">
+                    Еще раз!
+                </button>
             </div>
 
         </div>
@@ -65,62 +94,12 @@ export default {
         <button class="btn" v-on:click="stopGame()" v-if="!isPaused && isAlive">Pause</button>
         <button class="btn" v-on:click="restartGame()" v-if="!isAlive">Restart</button>
     </div>
-
-
 </template>
 
 <style>
 
 @import url("https://fonts.google.com/?query=Press+Start+2P");
 
-#infoCanvas{
-    margin:auto;
-    display: flex;
-    justify-content: center;
-}
-
-#gamePlayCanvas{
-    border-bottom: 1px solid;
-    margin:auto;
-    display: flex;
-    justify-content: center;
-}
-
-#gameOverCanvas {
-    font-family: 'Courier New', Courier, monospace;
-    margin:auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-img{
-    width: 45px;
-    height: 45px;
-}
-
-.centerContainer{
-    width: 600px;
-    height: 60px;
-    margin:auto;
-    display: flex;
-    justify-content: center;
-}
-
-
-#restartButton{
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    background: transparent ;
-    border: transparent;
-}
-
-#restartButton:hover{
-    background: #D6D7D7;
-    box-shadow: 3px 3px 3px #B2ADA9;
-}
 
 .content{
     width: 100%;

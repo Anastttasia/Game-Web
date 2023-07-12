@@ -26,9 +26,11 @@ const count = ref(0)
           <a class="btnNav">DINO</a>
         </div>
       </router-link>
+      <router-link :to="{ name: 'TicTacToe' }">
         <div class="navigationMenu">
           <a class="btnNav">YIC-TAC-TOE</a>
         </div>
+      </router-link>
       </div>
     </div>
     <div>

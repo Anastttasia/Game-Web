@@ -40,7 +40,7 @@ function showPassword() {
 </script>
 
 <template>
-  <!-- <h1>{{ title }}</h1> -->
+  <h1>{{ title }}</h1>
 
   <div v-if="errors.length > 0">
     <div v-for="(error, index) in errors" :key="index" style="color: red;">
@@ -61,19 +61,11 @@ function showPassword() {
     <input type="checkbox" @click="showPassword()">Show Password
   </div>
 
-  <div>
-    <label for="confirm" class="nameSlote">Confirm:</label>
-    <input id="confirm" ref="inputConfirm" class="registrationSlot" type="password">
-  </div>
-  <div class="registrationCheckbox">
-    <input type="checkbox" @click="showPassword()">Show Password
-  </div>
+
   <div style="margin: 1rem 0;">
-    <button class="btn" @click="onSendClick">
-      Send
+    <button class="btn" @click="onSendClick" style="width: 8rem;">
+      Sign in
     </button>
-  </div>
-  <div>
   </div>
 </template>
 
@@ -108,17 +100,13 @@ function showPassword() {
   background: url(https://snipp.ru/demo/495/no-view.svg) 0 0 no-repeat;
 }
 
-
-
-
-
 .registrationSlot {
   width: 20rem;
   height: 3rem;
   border: 1px solid #A50ABE;
   font-weight: 100;
   font-size: 1rem;
-  margin: 2rem 2rem 1rem 2rem;
+  margin: 2rem;
   box-shadow:
     0 0 1px #A50ABE,
     0 0 2px #A50ABE,
@@ -127,6 +115,7 @@ function showPassword() {
     0 0 20px #A50ABE,
     0 0 30px #A50ABE;
 }
+
 
 .registrationCheckbox {
   width: 20rem;

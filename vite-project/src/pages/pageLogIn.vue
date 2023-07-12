@@ -1,5 +1,5 @@
 <script setup>
-import RegistrationForm from '../components/RegistrationForm.vue';
+import RegistrationForm from '../components/AuthorizationForm.vue';
 // import ROUTES from '@/constants/routes.js';
 // import PROVIDE from '@/constants/provides.js';
 // import { inject, ref } from 'vue';

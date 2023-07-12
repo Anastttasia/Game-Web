@@ -129,7 +129,6 @@ img{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    ;
 }
 
 .nameGame{
@@ -149,7 +148,7 @@ img{
         0 0 80px #A50ABE;
 }
 .containerForGame{
-    width: 60%;
+    width: 70%;
     height: 50%;
     border: 1px solid #A50ABE;
     font-weight: 100;
@@ -177,5 +176,11 @@ img{
         0 0 2px #A50ABE,
         0 0 5px #A50ABE,
         0 0 11px #A50ABE;
+}
+
+@media screen and (max-width: 1270px) {
+    .containerForGame{
+    width: 90%;
+    }
 }
 </style>

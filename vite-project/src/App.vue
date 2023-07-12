@@ -53,4 +53,10 @@ mounted() {
   background-color: rgba(34, 22, 38, 0.42) ;
   margin: auto;
 }
+
+@media screen and (max-width: 1270px) {
+  .mainContainer{
+    width: 90vw;
+  }
+}
 </style>
