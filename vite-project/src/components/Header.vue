@@ -85,16 +85,6 @@ const count = ref(0)
   border-bottom: 3px solid #A50ABE;
 }
 
-/* .navgationLink {
-  text-decoration: none;
-  color: white;
-  background: transparent;
-  border: none;
-}
-
-.navgationLink:hover {
-  text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
-} */
 .btn {
   border: 1px solid #A50ABE;
   font-weight: 100;

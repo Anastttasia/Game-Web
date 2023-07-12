@@ -1,7 +1,6 @@
 <script>
 import * as myModule from '../TicTacToe.js';
 import '../styleTicTacToe.css';
-import { watch } from 'vue';
 
 export default {
     props: [],
@@ -100,61 +99,4 @@ export default {
 
 @import url("https://fonts.google.com/?query=Press+Start+2P");
 
-
-.content{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    ;
-}
-
-.nameGame{
-    color: white;
-    font-weight: 100;
-    margin-bottom: 4rem;
-    font-size: 3rem;
-    line-height: 95%;
-    text-shadow: 
-        0 0 1px #A50ABE,
-        0 0 2px #A50ABE,
-        0 0 5px #A50ABE,
-        0 0 11px #A50ABE,
-        0 0 20px #A50ABE,
-        0 0 30px #A50ABE,
-        0 0 55px #A50ABE,
-        0 0 80px #A50ABE;
-}
-.containerForGame{
-    width: 60%;
-    height: 50%;
-    border: 1px solid #A50ABE;
-    font-weight: 100;
-    font-size: 1rem;
-    margin: 0 0.5rem 0 0.5rem;
-    background-color: #684f86;
-    box-shadow: 
-        0 0 1px #A50ABE,
-        0 0 2px #A50ABE,
-        0 0 5px #A50ABE,
-        0 0 11px #A50ABE,
-        0 0 20px #A50ABE,
-        0 0 30px #A50ABE,
-        0 0 55px #A50ABE;
-}
-
-.btn{
-    width: 6rem;
-    border: 1px solid #A50ABE;
-    font-weight: 100;
-    font-size: 1.2rem;
-    margin-top: 4rem;
-    box-shadow: 
-        0 0 1px #A50ABE,
-        0 0 2px #A50ABE,
-        0 0 5px #A50ABE,
-        0 0 11px #A50ABE;
-}
 </style>
