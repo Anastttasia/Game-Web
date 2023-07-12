@@ -1,32 +1,56 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
+<script >
 import Header from './components/Header.vue'
+import Home from './pages/pageMain.vue';
+// import game from './pages/pageGame.vue'
+// import signUp from './pages/pageSignUp.vue'
+// import mainPage from './pages/pageMain.vue'
+import * as myModule from './main.js';
+
+export default {
+
+data() {
+    return {
+        total: 0,
+        itemsCount: 0
+    };
+},
+components: { Header, Home },
+methods: {
+    updateCart() {
+        let cartData = myModule._getCartData()
+        
+        let counterTotal = 0;
+        let itemsCount = 0;
+
+        for (let key in cartData) {
+            if (cartData[key]) {
+                counterTotal = counterTotal + Number(cartData[key].itemData.price * cartData[key].count);
+                itemsCount = itemsCount + cartData[key].count;
+            }
+        }
+        
+        this.total = Math.ceil(counterTotal);
+        this.itemsCount = itemsCount;
+    },
+},
+mounted() {
+    this.updateCart();
+}
+};
 </script>
 
 <template>
   <Header></Header>
-  <!-- <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div> -->
-  <!-- <HelloWorld msg="Vite + Vue" /> -->
+  <div class="mainContainer">
+    <router-view v-on:updateTotal="updateCart()"/>
+  </div>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.mainContainer{
+  width: 80vw;
+  height: 100vh;
+  background-color: rgba(34, 22, 38, 0.42) ;
+  margin: auto;
 }
 </style>
