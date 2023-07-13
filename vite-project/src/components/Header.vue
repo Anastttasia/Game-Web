@@ -28,7 +28,7 @@ const count = ref(0)
       </router-link>
       <router-link :to="{ name: 'TicTacToe' }">
         <div class="navigationMenu">
-          <a class="btnNav">YIC-TAC-TOE</a>
+          <a class="btnNav">TIC-TAC-TOE</a>
         </div>
       </router-link>
       </div>
@@ -96,4 +96,11 @@ const count = ref(0)
     0 0 5px #A50ABE,
     0 0 11px #A50ABE;
 }
+
+@media screen and (max-width: 1270px) {
+  .header {
+  padding: 1rem 4rem 2px 4rem;
+}
+}
+
 </style>

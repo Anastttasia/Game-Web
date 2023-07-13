@@ -10,6 +10,7 @@ let botFigure = 'o';
 
 let isBotTurn = false;
 
+let intervalID = 0;
 
 //STAFF
 function clearGameCells() {
@@ -47,7 +48,7 @@ function createChoiceWindow() {
 
     let textChoice = document.createElement('div');
     textChoice.className = 'textResult';
-    textChoice.innerText = 'Выберите фигуру';
+    textChoice.innerText = 'Choose a figure';
     textChoice.style.color = 'black';
     
     let  createFigureCross = document.createElement('div');
@@ -97,19 +98,19 @@ function openResultWindow(winner) {
 
     let textResult = document.createElement('div');
     textResult.className = 'textResult';
-    textResult.innerText = "Победил : " + winner;
+    textResult.innerText = "Won : " + winner;
     textResult.style.color = "black";
 
     resultContainer.appendChild(textResult);
 
     let buttonAgain = document.createElement('button');
     buttonAgain.className = 'buttonAgain';
-    buttonAgain.innerText = "Еще раз!";
+    buttonAgain.innerText = "Again!";
     buttonAgain.addEventListener("click", restartGame);
 
     let buttonClose = document.createElement('button');
     buttonClose.className = 'buttonJustClose';
-    buttonClose.innerText = "Просто закрыть";
+    buttonClose.innerText = "Just close";
     buttonClose.addEventListener("click", deleteResultModal);
 
     resultContainer.appendChild(buttonAgain);
@@ -211,8 +212,8 @@ function setGameScore(winner) {
 function botMove() {
 
     while (true) {
-        randIndex = Math.floor(Math.random() * cellElementsArray.length);
-        randElement = cellElementsArray[randIndex];
+        let randIndex = Math.floor(Math.random() * cellElementsArray.length);
+        let randElement = cellElementsArray[randIndex];
         if (randElement.textContent) continue;
         randElement.textContent = botFigure;
         break;
@@ -221,7 +222,7 @@ function botMove() {
     isBotTurn = false;
 }
 
-function restartGame() {
+export function restartGame() {
     deleteResultModal();
     clearGameCells();
     isGameStopped = false;
@@ -229,40 +230,57 @@ function restartGame() {
 }
 
 //INIT GAME
-createChoiceWindow();
 
-for (var i = 0; i < cellElementsArray.length; i++) {
 
-    cellElementsArray[i].addEventListener("click", function (event) {
+export function init() {
+    createChoiceWindow();
 
-        if (isGameStopped || isBotTurn) return;
+    cellElementsArray = document.querySelectorAll("[data-num]");
 
-        if (event.target.textContent) return;
+    for (var i = 0; i < cellElementsArray.length; i++) {
 
-        event.target.style.color = "white";
-        event.target.textContent = playerFigure;
-        isBotTurn = true;
-    })
+        cellElementsArray[i].addEventListener("click", function (event) {
+
+            if (isGameStopped || isBotTurn) return;
+
+            if (event.target.textContent) return;
+
+            event.target.style.color = "white";
+            event.target.textContent = playerFigure;
+            isBotTurn = true;
+        })
+    }
+
+    intervalID = setInterval(function() {
+        if (isGameStopped) return;
+    
+        let winner = getWinner();
+        if (!checkEmptyFields() || winner != '') {
+            isGameStopped = true;
+    
+            if (winner != '') { 
+                setGameScore(winner);
+                openResultWindow(winner);
+            }
+            else {
+                openResultWindow('Ничья');
+            }
+        }
+    
+        if (isBotTurn && !isGameStopped) {
+            botMove();
+        }
+    
+    }, 300);
+
 }
 
-setInterval(function() {
-    if (isGameStopped) return;
+export function stopGame() {
+    isBotTurn = false;
+    isGameStopped = true;
+    deleteResultModal();
+    clearGameCells();
+    clearInterval(intervalID);
+}
 
-    let winner = getWinner();
-    if (!checkEmptyFields() || winner != '') {
-        isGameStopped = true;
-
-        if (winner != '') { 
-            setGameScore(winner);
-            openResultWindow(winner);
-        }
-        else {
-            openResultWindow('Ничья');
-        }
-    }
-
-    if (isBotTurn && !isGameStopped) {
-        botMove();
-    }
-
-}, 300);
+export default init

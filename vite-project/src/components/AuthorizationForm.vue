@@ -30,11 +30,12 @@ const onSendClick = async () => {
 
 
 function showPassword() {
-  var x = document.getElementById("myInput");
-  if (x.type === "password") {
-    x.type = "text";
+  let password = document.getElementById("password");
+  let confirmPassword = document.getElementById("confirm");
+  if (password.type === "password") {
+    password.type = "text";
   } else {
-    x.type = "password";
+    password.type = "password";
   }
 }
 </script>
@@ -50,12 +51,22 @@ function showPassword() {
   </div>
   <div>
     <label for="username" class="nameSlote">Username:</label>
-    <input id="username" ref="inputUsername" class="registrationSlot">
+    <input 
+      id="username" 
+      ref="inputUsername" 
+      class="registrationSlot" 
+      placeholder="Your username"
+    >
   </div>
   <div>
     <label for="password" class="nameSlote">Password:</label>
-    <input id="password" ref="inputPassword" class="registrationSlot" type="password">
-
+    <input 
+      id="password" 
+      ref="inputPassword" 
+      class="registrationSlot" 
+      type="password"
+      placeholder="Your password "
+    >
   </div>
   <div class="registrationCheckbox">
     <input type="checkbox" @click="showPassword()">Show Password

@@ -9,11 +9,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "nano": "^10.1.2",
+    "node-couchdb": "^2.0.0",
+    "pocketbase": "^0.15.3",
+    "pouchdb": "^8.0.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",
+    "hasura-cli": "^2.29.1",
     "vite": "^4.3.9"
   }
 }

@@ -6,44 +6,28 @@ export default {
     props: [],
     data() {
         return {
-            isPaused: myModule.isPaused,
-            isAlive: myModule.isAlive,
-            message: ''
         };
     },
     emits: [],
     methods: {
-        startGame() {
-            myModule.play();
-            this.isPaused = myModule.isPaused;
-            this.isAlive = myModule.isAlive
-        },
-        stopGame() {
-            myModule.pause();
-            this.isPaused = myModule.isPaused;
-            this.isAlive = myModule.isAlive
-        },
         restartGame() {
-            myModule.restart();
-            this.isPaused = myModule.isPaused;
-            this.isAlive = myModule.isAlive
-        },
-        pollData() {
+            myModule.restartGame();
 
-            this.isPaused = myModule.isPaused;
-            this.isAlive = myModule.isAlive;
         }
+    },
+    activated() {
+        myModule.init();
+    },
+    deactivated() {
+        myModule.stopGame();
     },
     mounted() {
         myModule.init();
-        this.isPaused = myModule.isPaused;
-        this.isAlive = myModule.isAlive;
-        setInterval(() => {
-
-            this.isPaused = myModule.isPaused;
-            this.isAlive = myModule.isAlive;
-        }, 100)
+    },
+    unmounted() {
+        myModule.stopGame();
     }
+
 }
 
 </script>
@@ -81,17 +65,10 @@ export default {
                         </div>
                     </div>
                 </div>
-                <button 
-                    @click="restartGame()" 
-                    class="buttonAgainInGame">
-                    Еще раз!
-                </button>
             </div>
 
         </div>
-        <button class="btn" v-on:click="startGame()" v-if="isPaused && isAlive">Start</button>
-        <button class="btn" v-on:click="stopGame()" v-if="!isPaused && isAlive">Pause</button>
-        <button class="btn" v-on:click="restartGame()" v-if="!isAlive">Restart</button>
+       <button class="btn" v-on:click="restartGame()" v-if="!isAlive">Restart</button>
     </div>
 </template>
 

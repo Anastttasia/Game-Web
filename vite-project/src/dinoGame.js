@@ -8,17 +8,19 @@ let gamePlayCanvasContext = null;
 let gameOverCanvas = null;
 let gameOverCanvasContext = null;
 
-let restartButton = null;
+let isEnded = false;
 
 //CONSTANTS
 const IMG_SIZE = 50;
 let FLOOR_GAME_Y = IMG_SIZE;
 
-const GRAVITY_SPEED = 1.1;
-const JUMP_SPEED = 10;
+const GRAVITY_SPEED = 0.15;
+let JUMP_SPEED = 0;
+
 
 let CACTUS_START_X_POS = 0;
-const CACTUS_X_SPEED = 5;
+let CACTUS_X_SPEED = 5;
+const MAX_CACTUS_X_SPEED = 50;
 
 //VARS
 let dino = new Image();
@@ -49,18 +51,18 @@ function drawGame() {
         if (dinoY < IMG_SIZE && cactusX < IMG_SIZE && cactusX > 0 - IMG_SIZE) {
             isAlive = false;
             isPaused = true;
-            restartButton.style.display = "inline-block";
         }
 
         if(isAlive && !isPaused) {
             score +=1;
-
+            dinoY += JUMP_SPEED;
             //GAME PLAY
             if (dinoY > 0) {
-                dinoY -= GRAVITY_SPEED;
+                JUMP_SPEED -= GRAVITY_SPEED;
             }
             else {
                 dinoY = 0;
+                JUMP_SPEED = 0;
             }
 
             //SPEED CACTUS
@@ -68,15 +70,24 @@ function drawGame() {
                 cactusX -= CACTUS_X_SPEED;
             }
             else {
-                cactusX = CACTUS_START_X_POS;
+                cactusX = CACTUS_START_X_POS + CACTUS_X_SPEED;
             }
             
         }
-        else {
+        else if (!isAlive) {
             //GAME OVER BLOCK DRAW
             gameOverCanvasContext.fillText("GAME OVER", 120, 100);
         }
+        else if (isPaused) {
+            //GAME OVER BLOCK DRAW
+            gameOverCanvasContext.fillText("GAME PAUSED", 120, 100);
+        }
+        
         lastTime = thisTime;
+        if (CACTUS_X_SPEED < MAX_CACTUS_X_SPEED) {
+            CACTUS_X_SPEED = CACTUS_X_SPEED + 0.001;
+        }
+        
     }
         
     //TOP BLOCK DRAW
@@ -86,20 +97,15 @@ function drawGame() {
     gamePlayCanvasContext.drawImage(dino, 0, FLOOR_GAME_Y - dinoY, IMG_SIZE, IMG_SIZE);
     gamePlayCanvasContext.drawImage(cactus, cactusX, FLOOR_GAME_Y, IMG_SIZE, IMG_SIZE);
 
+
+    if (isEnded) return;
     window.requestAnimationFrame(drawGame);
 }
 
 function jump() {
-
-    let id = setInterval( function() {
-        if (dinoY > IMG_SIZE * 1.5) {
-            clearInterval(id);
-        }
-        else{
-            dinoY += JUMP_SPEED;
-        }
-    }, 5)
-
+    if (JUMP_SPEED == 0) {
+        JUMP_SPEED = 6;
+    }
 }
 
 export function init(){
@@ -112,8 +118,6 @@ export function init(){
 
     gameOverCanvas = document.getElementById("gameOverCanvas");
     gameOverCanvasContext = gameOverCanvas.getContext("2d");
-
-    restartButton = document.getElementById("restartButton");
 
     FLOOR_GAME_Y = gamePlayCanvas.height - IMG_SIZE;
 
@@ -128,7 +132,6 @@ export function init(){
     infoCanvasContext.fillStyle = "#000";
     infoCanvasContext.font = '25px Courier New';
     
-    restartButton.addEventListener("click", setDefaults);
     document.addEventListener("keydown", jump);
 
     setDefaults();
@@ -142,8 +145,9 @@ function setDefaults() {
     cactusX = CACTUS_START_X_POS;
     score = 0;
     isAlive = true;
-
-    restartButton.style.display = "none";
+    CACTUS_X_SPEED = 5;
+    JUMP_SPEED = 0;
+    isEnded = false;
 }
 
 export function play() {
@@ -158,6 +162,11 @@ export function pause() {
 export function restart() {
     setDefaults();
     play();
+}
+
+export function stop() {
+    isEnded = true;
+    document.removeEventListener("keydown", jump);
 }
 
 export default init
