@@ -1,46 +1,53 @@
 <script setup>
 import { ref } from 'vue';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth"
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
   registration: { type: Boolean, default: false },
-  title: { type: String, default: '' },
-  errors: { type: Array, default: () => [] },
 });
 
-const emit = defineEmits(['login', 'register']);
+const router = useRouter();
 
-const inputUsername = ref(null);
-const inputPassword = ref(null);
-const inputConfirm = ref(null);
+const email = ref("")
+const password = ref("")
 
-const checkPasswordsMatch = () => inputPassword.value.value === inputConfirm.value?.value;
+const emit = defineEmits(['register']);
 
-const onSendClick = async () => {
-  const username = inputUsername.value.value || '';
-  const password = inputPassword.value.value || '';
-  const dto = { username, password };
-  const canRegister = props.registration && checkPasswordsMatch();
-  console.log('> RegistrationForm -> onSendClick', canRegister);
-  if (canRegister) {
-    emit('register', dto);
-  } else {
-    emit('login', dto);
+const register = async () => {
+  
+  if (props.registration) {
+    createUserWithEmailAndPassword(getAuth(), email.value, password.value)
+    .then((data) => {
+      console.log("REGANULSYA")
+      router.push("/")
+    })
+    .catch((error) => {
+      console.log(error.code);
+      alert(error.message);
+    })
+  }
+  else {
+    console.log("LOG IN");
+    signInWithEmailAndPassword(getAuth(), email.value, password.value)
+    .then((data) => {
+      console.log("LOGINULSYA")
+      router.push("/")
+    })
+    .catch((error) => {
+      console.log(error.code);
+      alert(error.message);
+    })
   }
 };
 
 
 function showPassword() {
   let password = document.getElementById("password");
-  let confirmPassword = document.getElementById("confirm");
   if (password.type === "password") {
     password.type = "text";
   } else {
     password.type = "password";
-  }
-  if (confirmPassword.type === "password") {
-    confirmPassword.type = "text";
-  } else {
-    confirmPassword.type = "password";
   }
 }
 </script>
@@ -48,47 +55,32 @@ function showPassword() {
 <template>
   <!-- <h1>{{ title }}</h1> -->
 
-  <div v-if="errors.length > 0">
-    <div v-for="(error, index) in errors" :key="index" style="color: red;">
-      <small>{{ error }}</small>
-    </div>
 
-  </div>
   <div>
-    <label for="username" class="nameSlote">Username:</label>
+    <label for="email" class="nameSlote">Email:</label>
     <input 
-      id="username" 
-      ref="inputUsername" 
+      id="email" 
       class="registrationSlot" 
-      placeholder="Your username"
+      placeholder="Your email"
+      v-model="email"
     >
   </div>
   <div>
     <label for="password" class="nameSlote">Password:</label>
     <input 
       id="password" 
-      ref="inputPassword" 
       class="registrationSlot" 
       type="password"
+      v-model="password"
       placeholder="Password must be 5-10 numbers"
     >
   </div>
 
-  <div>
-    <label for="confirm" class="nameSlote">Confirm:</label>
-    <input 
-      id="confirm" 
-      ref="inputConfirm" 
-      class="registrationSlot" 
-      type="password" 
-      placeholder="Confirm your password"
-    >
-  </div>
   <div class="registrationCheckbox">
     <input type="checkbox" @click="showPassword()">Show Password
   </div>
   <div style="margin: 1rem 0;">
-    <button class="btn" @click="onSendClick">
+    <button class="btn" @click="register">
       Send
     </button>
   </div>

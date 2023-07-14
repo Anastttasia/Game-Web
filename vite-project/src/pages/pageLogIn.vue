@@ -1,30 +1,11 @@
 <script setup>
-import RegistrationForm from '../components/AuthorizationForm.vue';
-import PROVIDE from '../constants/provides.js';
-import { inject, ref } from 'vue';
-
-const pb = inject(PROVIDE.PB);
-const isSucces = ref(false);
-
-const onLogin = (dto) => {
-  pb.collection('userss').authWithPassword(
-    dto.username,
-    dto.password
-  ).then(() =>{
-    isSucces.value = true;
-  });
-};
+import RegistrationForm from '../components/RegistrationForm.vue';
 </script>
 
 <template>
     <div class="content">
         <span class="nameSlot">Log in</span>
-        <div v-if="!isSucces">
-            <RegistrationForm @login="onLogin" />
-        </div>
-        <div v-else>
-            <div>You have been successfully logged in</div>
-        </div>
+        <RegistrationForm/>
     </div>
 </template>
 

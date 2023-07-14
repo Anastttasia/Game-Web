@@ -2,9 +2,12 @@
 import { ref } from 'vue'
 import Logo from './Logo.vue'
 
-defineProps({
-  msg: String,
-})
+const props = defineProps({
+  isLoggedIn: { type: Boolean, default: false },
+  msg: {type: String, default: ''}
+});
+
+const emit = defineEmits(['sign-out']);
 
 const count = ref(0)
 </script>
@@ -34,12 +37,13 @@ const count = ref(0)
       </div>
     </div>
     <div>
-      <router-link :to="{ name: 'SignUp' }">
+      <router-link v-if="!isLoggedIn" :to="{ name: 'SignUp' }">
         <button class="btn">Sign Up</button>
       </router-link>
-      <router-link :to="{ name: 'LogIn' }">
+      <router-link v-if="!isLoggedIn" :to="{ name: 'LogIn' }">
         <button class="btn">Log in</button>
       </router-link>
+      <button class="btn" @click="$emit('sign-out')" v-if="isLoggedIn">SignOut</button>
     </div>
   </div>
 </template>

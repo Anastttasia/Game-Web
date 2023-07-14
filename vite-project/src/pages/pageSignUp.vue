@@ -1,30 +1,11 @@
 <script setup>
 import RegistrationForm from '../components/RegistrationForm.vue';
-import PROVIDE from '../constants/provides.js';
-import { inject, ref } from 'vue';
-
-const pb = inject(PROVIDE.PB);
-const isSucces = ref(false);
-
-const onLogin = (dto) => {
-  pb.collection('userss').authWithPassword(
-    dto.username,
-    dto.password
-  ).then(() =>{
-    isSucces.value = true;
-  });
-};
 </script>
 
 <template>
     <div class="content">
         <span class="nameSlot">Sign up</span>
-        <div v-if="!isSucces">
-            <RegistrationForm @login="onLogin"/>
-        </div>
-        <div v-else>
-            <div>You have been successfully logged in</div>
-        </div>
+        <RegistrationForm :registration="true"/>
     </div>
 </template>
 
@@ -37,7 +18,6 @@ const onLogin = (dto) => {
     justify-content: center;
     align-items: center;
 }
-
 
 .containerForGame{
     width: 60%;

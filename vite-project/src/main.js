@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
-import { provide } from 'vue'
 import './style.css'
 import App from './App.vue'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -8,8 +7,21 @@ import Dino from './pages/pageGameDino.vue';
 import TicTacToe from './pages/pageTicTacToe.vue';
 import SignUp from './pages/pageSignUp.vue'
 import LogIn from './pages/pageLogIn.vue'
-import PocketBase from 'pocketbase';
-import PROVIDE from './constants/provides.js';
+
+import {getAuth, onAuthStateChanged, signOut} from "firebase/auth"
+
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCsBe_eXYLJWY2gmAJsT5QwSS7HWu-FLto",
+  authDomain: "gameplatform-177f8.firebaseapp.com",
+  projectId: "gameplatform-177f8",
+  storageBucket: "gameplatform-177f8.appspot.com",
+  messagingSenderId: "429360091394",
+  appId: "1:429360091394:web:382ac07c5b7a8ae30e721b"
+};
+
+const app = initializeApp(firebaseConfig);
 
 const router = createRouter({
     routes: [
@@ -22,6 +34,9 @@ const router = createRouter({
             path: '/Dino',
             name: 'Dino',
             component: Dino,
+            meta: {
+                requiresAuth: true,
+            }
         },
         {
             path: '/SignUp',
@@ -36,25 +51,30 @@ const router = createRouter({
         {
             path: '/TicTacToe',
             name: 'TicTacToe',
-            component: TicTacToe
+            component: TicTacToe,
+            meta: {
+                requiresAuth: true,
+            }
         },
     ],
     history: createWebHistory()
   });
 
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.requiresAuth)) {
+        if (getAuth().currentUser) {
+            next();
+        } else {
+            alert("Please Sign Up or Sign In before play!");
+            next('/');
+        }
+    }
+    else {
+        next();
+    }
+});
 
-
-const pb = new PocketBase('http://127.0.0.1:8090');
-// const user = ref(pb.authStore.model);
-// pb.authStore.onChange(() => {
-//   console.log('> App -> authStore.onChange', pb.authStore.onChange.model);
-//   user.value = pb.authStore.model;
-// });
-// const hasUser = computed(() => !!user.value);
-
-  const app = createApp(App);
-  app
-    .provide(PROVIDE.PB, pb)
-    .use(router)
-    .mount('#app')
+createApp(App)
+.use(router)
+.mount('#app')
     

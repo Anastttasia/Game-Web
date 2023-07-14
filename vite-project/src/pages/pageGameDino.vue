@@ -1,6 +1,5 @@
 <script>
 import * as myModule from '../dinoGame.js';
-import { watch } from 'vue';
 
 export default {
     props: [],

@@ -1,25 +1,47 @@
 <script >
 import Header from './components/Header.vue'
 import Home from './pages/pageMain.vue';
+import {getAuth, onAuthStateChanged, signOut} from "firebase/auth"
+import { useRouter } from 'vue-router';
+
+let router;
+
+let auth;
+
 
 export default {
 
 data() {
     return {
-        total: 0,
-        itemsCount: 0
+        isLoggedIn: false
     };
 },
 components: { Header, Home },
 methods: {
+  handleSignOut() {
+    signOut(auth).then(() => {
+      router.push("/");
+    });
+  }
 },
 mounted() {
+  router = useRouter();
+  auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    console.log("onAuthStateChanged")
+    if (user) {
+      this.isLoggedIn = true;
+    }
+    else {
+      this.isLoggedIn = false;
+    }
+  });
 }
 };
 </script>
 
 <template>
-  <Header></Header>
+  <Header v-on:sign-out="handleSignOut()" :isLoggedIn="isLoggedIn"></Header>
   <div class="mainContainer">
     <router-view/>
   </div>
