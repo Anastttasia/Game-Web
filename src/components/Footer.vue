@@ -5,7 +5,7 @@
 <template>
     <div class="footerContainer">
         <div class="listRight">
-            <a href="https://github.com/Anastttasia/Game-Web" class="footerLogo">GitHub</a>
+            <a href="https://github.com/Anastttasia/Game-Web" class="footerLogo" target="_blank">GitHub</a>
            <span>Anastasia Kaneva</span> 
            <span>2023</span> 
         </div>

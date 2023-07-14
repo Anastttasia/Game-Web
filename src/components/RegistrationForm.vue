@@ -53,8 +53,6 @@ function showPassword() {
 </script>
 
 <template>
-  <!-- <h1>{{ title }}</h1> -->
-
 
   <div>
     <label for="email" class="nameSlote">Email:</label>
@@ -66,7 +64,7 @@ function showPassword() {
     >
   </div>
   <div>
-    <label for="password" class="nameSlote">Password:</label>
+    <label for="password" class="nameSlote">PSWD:</label>
     <input 
       id="password" 
       class="registrationSlot" 
