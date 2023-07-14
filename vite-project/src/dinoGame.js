@@ -1,6 +1,3 @@
-import dinoUrl from './assets/DinoAssets/dino.png'
-import cactusUrl from './assets/DinoAssets/cactus.png'
-
 //FISRT INIT STEPS
 let infoCanvas = null;
 let infoCanvasContext = null;
@@ -126,8 +123,8 @@ export function init(){
 
     CACTUS_START_X_POS = gamePlayCanvas.width;
 
-    dino.src = dinoUrl;
-    cactus.src = cactusUrl;
+    dino.src = "./src/image/DinoAssets/dino.png";
+    cactus.src = "./src/image/DinoAssets/cactus.png";
 
     gameOverCanvasContext.fillStyle = "#000";
     gameOverCanvasContext.font = '65px Courier New';

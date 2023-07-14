@@ -1,9 +1,5 @@
-<script setup>
+<script>
 
-const props = defineProps({
-  isLoggedIn: { type: Boolean, default: false },
-  msg: {type: String, default: ''}
-});
 </script>
 
 <template>
@@ -12,14 +8,7 @@ const props = defineProps({
         <div class="half">
             <h1 class="welcome">GAME WEB</h1>
             <h2>PLAY ONLINE GAMES AND SHARE THE RESULTS!</h2>
-            <router-link  v-if="!isLoggedIn" :to="{ name: 'LogIn' }">
-                <button class="btn btnStart" style="width: 9rem; height: 3rem;">
-                    <span class="nameSlot" style="font-size: x-large; font-weight: 400;">
-                        START!
-                    </span>
-                </button>
-            </router-link>
-            <router-link  v-if="isLoggedIn" :to="{ name: 'Dino' }">
+            <router-link :to="{ name: 'SignUp' }">
                 <button class="btn btnStart" style="width: 9rem; height: 3rem;">
                     <span class="nameSlot" style="font-size: x-large; font-weight: 400;">
                         START!
@@ -36,7 +25,7 @@ const props = defineProps({
     margin: 0;
     widows: 100%;
     height: 100%;
-    background-image: url('../assets/mainPageBgDesctop.png');
+    background-image: url('../image/mainPageBgDesctop.png');
 }
 
 .descr{
